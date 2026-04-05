@@ -5,27 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="CV - резюме веброзробника">
     <title>Резюме - Дмитро Мамчик</title>
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👤</text></svg>">
 </head>
 <body>
     
-    <header>
+    <header style="position: relative;">
         <h1>Дмитро Мамчик</h1>
         <p>👨‍💻 <strong>Full Stack Developer</strong></p>
         <p>📍 Львів, Україна</p>
+        <button id="themeToggleBtn">🌙 Нічна тема</button>
     </header>
 
-    
     <main>
-        
         <section>
             <h2>Про мене</h2>
             <p>Привіт! Я студент Львівської політехніки. Маю пристрасть до чистоти коду та зручності користувацького інтерфейсу. Постійно вивчаю нові технології та прагну до професійного зростання.</p>
         </section>
 
-
-        
         <section>
             <h2>Досвід роботи</h2>
             <article>
@@ -40,9 +37,6 @@
             </article>
         </section>
 
-         
-
-        
         <section>
             <h2>Освіта</h2>
             <article>
@@ -53,7 +47,6 @@
             </article>
         </section>
 
-        
         <section>
             <h2>Навички</h2>
             <ul>
@@ -63,10 +56,37 @@
                 <li><strong>Мови:</strong> Українська (рідна), Англійська</li>
             </ul>
         </section>
-            
+
+        <!-- Завдання 2: Відгуки роботодавців -->
+        <section>
+            <h2>📝 Відгуки роботодавців</h2>
+            <div id="reviews-container">
+                <p>⏳ Завантаження відгуків...</p>
+            </div>
+        </section>
     </main>
 
-    <footer id="system-info"></footer>
+    <!-- Завдання 1: Футер з інформацією з localStorage -->
+    <footer>
+        <h3>📦 Інформація з localStorage:</h3>
+        <div id="system-info"></div>
+    </footer>
 
+    <!-- Завдання 3: Модальне вікно -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <h2>📧 Зворотний зв'язок</h2>
+            <form id="contactForm" action="https://formspree.io/f/mreopobd" method="POST">
+                <input type="text" name="name" placeholder="Ім'я" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="tel" name="phone" placeholder="Номер телефону">
+                <textarea name="message" placeholder="Ваше повідомлення" rows="4" required></textarea>
+                <button type="submit">Відправити</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
