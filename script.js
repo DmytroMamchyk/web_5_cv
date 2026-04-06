@@ -1,8 +1,3 @@
-// ============================================
-// ЗАВДАННЯ 1: Зберігання даних у localStorage
-// ============================================
-
-// Отримуємо інформацію про систему
 const systemData = {
     os: navigator.platform,
     browser: navigator.userAgent,
@@ -22,7 +17,6 @@ localStorage.setItem('visitDate', new Date().toLocaleString('uk-UA'));
 function displayLocalStorage() {
     const container = document.getElementById('system-info');
     if (!container) return;
-    
     let html = '';
     for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
@@ -30,7 +24,6 @@ function displayLocalStorage() {
         if (value && value.length > 80) value = value.substring(0, 80) + '...';
         html += `<strong>${key}:</strong> ${value}<br>`;
     }
-    html += `<br>📊 <strong>Всього:</strong> ${localStorage.length} елементів`;
     container.innerHTML = html;
 }
 
@@ -40,7 +33,7 @@ displayLocalStorage();
 // ЗАВДАННЯ 2: Отримання коментарів з JSONPlaceholder
 // ============================================
 
-const VARIANT_NUMBER = 1;
+const VARIANT_NUMBER = 9;
 
 async function loadReviews() {
     const container = document.getElementById('reviews-container');
