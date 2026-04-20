@@ -2,52 +2,53 @@ import React, { useState, useEffect } from 'react';
 
 export default function ContactForm() {
   const [isOpen, setIsOpen] = useState(false);
-  const [status, setStatus] = useState(''); // Для відображення результату відправки
+  const [status, setStatus] = useState('');
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsOpen(true);
-    }, 3000);
+    }, 30000); // 1 хвилина
 
-    return () => clearTimeout(timer); 
+    return () => clearTimeout(timer);
   }, []);
 
-  // Функція для обробки відправки форми на твій Node.js сервер
+  // Функція для відправки на Formspree
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Зупиняємо стандартне перезавантаження сторінки
-    setStatus('Відправка...');
+    e.preventDefault();
+    setStatus('⏳ Відправка...');
 
-    // Збираємо дані безпосередньо з елементів форми
+    // Збираємо дані з форми
     const formData = {
       name: e.target.name.value,
       email: e.target.email.value,
-      subject: e.target.phone.value, // Можна використати поле телефону як тему
+      phone: e.target.phone.value,
       message: e.target.message.value
     };
 
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch('https://formspree.io/f/mreopobd', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json', // Обов'язково для Koa-bodyparser [cite: 321]
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formData)
       });
 
-      const result = await response.json();
-
       if (response.ok) {
-        setStatus('✅ ' + (result.success || 'Успішно надіслано!'));
-        setTimeout(() => setIsOpen(false), 2000); // Закриваємо вікно через 2 сек
+        setStatus('✅ Повідомлення успішно відправлено!');
+        e.target.reset();
+        setTimeout(() => setIsOpen(false), 2000);
       } else {
-        setStatus('❌ Помилка: ' + (result.error || 'Щось пішло не так'));
+        const error = await response.json();
+        setStatus('❌ Помилка: ' + (error.error || 'Щось пішло не так'));
       }
     } catch (error) {
-      setStatus('❌ Не вдалося з’єднатися з сервером');
+      setStatus('❌ Помилка відправки. Спробуйте ще раз.');
     }
   };
 
-  if (!isOpen) return null; 
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
@@ -55,7 +56,6 @@ export default function ContactForm() {
         
         <h2 className="text-2xl font-bold mb-6 text-center">Зворотній зв'язок</h2>
         
-        {/* Використовуємо onSubmit замість action */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <input type="text" name="name" placeholder="Ім'я" required 
